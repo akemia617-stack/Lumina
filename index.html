@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lumina - Doces e salgados fresquinhos. Veja o cardápio e faça seu pedido.">
+  <title>Lumina | Doces e Salgados</title>
+  <!-- Conexão com o arquivo de estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== CABEÇALHO ========== -->
+  <header class="header">
+    <div class="container header-content">
+      <a href="#inicio" class="logo">✨ Lumina</a>
+
+      <!-- Botão hambúrguer (aparece só no celular) -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+
+      <!-- Menu de navegação -->
+      <nav class="nav" id="nav">
+        <a href="#inicio">Início</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#calculadora">Calculadora</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#pedido" class="nav-cta">Meu Pedido (<span id="navCount">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========== PÁGINA PRINCIPAL ========== -->
+    <section class="hero" id="inicio">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <span class="tag">Feito com carinho todos os dias</span>
+          <h1>Doces e salgados que iluminam o seu dia</h1>
+          <p>Na Lumina você encontra bolos, brigadeiros, coxinhas e muito mais, para todas as idades e para todos os momentos. Escolha no cardápio e monte seu pedido em poucos cliques.</p>
+          <div class="hero-buttons">
+            <a href="#cardapio" class="btn btn-primary">Ver cardápio</a>
+            <button class="btn btn-outline" id="btnSurpresa">🎁 Surpreenda-me</button>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">🧁</div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO 1: CARDÁPIO ========== -->
+    <section class="section" id="cardapio">
+      <div class="container">
+        <h2 class="section-title">Nosso Cardápio</h2>
+        <p class="section-subtitle">Escolha uma categoria e adicione seus favoritos ao pedido.</p>
+
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-category="todos">Todos</button>
+          <button class="filter-btn" data-category="doces">🍰 Doces</button>
+          <button class="filter-btn" data-category="salgados">🥟 Salgados</button>
+          <button class="filter-btn" data-category="bebidas">🥤 Bebidas</button>
+        </div>
+
+        <!-- Os cards dos produtos são criados pelo JavaScript -->
+        <div class="menu-grid" id="menuGrid"></div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO 2: CALCULADORA DE FESTA ========== -->
+    <section class="section section-alt" id="calculadora">
+      <div class="container">
+        <h2 class="section-title">Calculadora de Festa</h2>
+        <p class="section-subtitle">Quantos doces e salgados você precisa? Informe o número de convidados.</p>
+
+        <div class="calc-box">
+          <div class="calc-form">
+            <label for="guests">Número de convidados</label>
+            <input type="number" id="guests" min="1" max="1000" placeholder="Ex.: 30">
+
+            <label for="partyType">Tipo de evento</label>
+            <select id="partyType">
+              <option value="1">Lanche rápido (leve)</option>
+              <option value="1.5" selected>Festa de aniversário</option>
+              <option value="2">Festa longa (muita comida)</option>
+            </select>
+
+            <button class="btn btn-primary" id="btnCalc">Calcular</button>
+          </div>
+          <div class="calc-result" id="calcResult">
+            <p>O resultado aparecerá aqui. 🎉</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO 3: SOBRE ========== -->
+    <section class="section" id="sobre">
+      <div class="container">
+        <h2 class="section-title">Por que escolher a Lumina?</h2>
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon">🌾</div>
+            <h3>Ingredientes frescos</h3>
+            <p>Tudo é preparado no dia, com ingredientes selecionados e muito cuidado.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">👨‍👩‍👧‍👦</div>
+            <h3>Para toda a família</h3>
+            <p>Sabores clássicos e opções para crianças, jovens e adultos.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">🚚</div>
+            <h3>Entrega ou retirada</h3>
+            <p>Você escolhe: receba em casa ou retire no balcão, quentinho.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO 4: PEDIDO ========== -->
+    <section class="section section-alt" id="pedido">
+      <div class="container">
+        <h2 class="section-title">Seu Pedido</h2>
+        <p class="section-subtitle">Confira os itens e preencha seus dados para finalizar.</p>
+
+        <div class="order-layout">
+          <!-- Carrinho -->
+          <div class="cart-box">
+            <h3>🛒 Itens escolhidos</h3>
+            <ul class="cart-list" id="cartList"></ul>
+            <div class="cart-total">
+              <span>Total:</span>
+              <strong id="cartTotal">R$ 0,00</strong>
+            </div>
+            <button class="btn btn-outline btn-block" id="btnClear">Esvaziar pedido</button>
+          </div>
+
+          <!-- Formulário -->
+          <form class="order-form" id="orderForm" novalidate>
+            <h3>📝 Seus dados</h3>
+
+            <label for="name">Nome completo</label>
+            <input type="text" id="name" placeholder="Seu nome">
+            <small class="error" id="errName"></small>
+
+            <label for="phone">Telefone (com DDD)</label>
+            <input type="tel" id="phone" placeholder="(11) 99999-9999">
+            <small class="error" id="errPhone"></small>
+
+            <label for="delivery">Como deseja receber?</label>
+            <select id="delivery">
+              <option value="retirada">Retirar no balcão (grátis)</option>
+              <option value="entrega">Entrega em casa (+ R$ 8,00)</option>
+            </select>
+
+            <div id="addressBox" class="hidden">
+              <label for="address">Endereço de entrega</label>
+              <input type="text" id="address" placeholder="Rua, número e bairro">
+              <small class="error" id="errAddress"></small>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Finalizar pedido</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <h3>✨ Lumina</h3>
+        <p>Doces e salgados feitos com carinho.</p>
+      </div>
+      <div>
+        <h4>Horário</h4>
+        <p>Seg a Sáb: 8h às 19h<br>Dom: 8h às 13h</p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p>📍 São Manuel - SP<br>📞 (14) 99999-0000</p>
+      </div>
+    </div>
+    <p class="copyright">© <span id="year"></span> Lumina. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Janela de confirmação do pedido -->
+  <div class="modal hidden" id="modal">
+    <div class="modal-box">
+      <h3>🎉 Pedido realizado!</h3>
+      <div id="modalText"></div>
+      <button class="btn btn-primary" id="modalClose">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Mensagem rápida (toast) -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Conexão com o arquivo de JavaScript (no final, após o HTML carregar) -->
+  <script src="script.js"></script>
+</body>
+</html>
